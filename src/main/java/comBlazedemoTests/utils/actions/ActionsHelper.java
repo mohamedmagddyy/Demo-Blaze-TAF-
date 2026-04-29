@@ -137,4 +137,12 @@ public class ActionsHelper {
             LogsManager.error("[uploadFile] Failed: " + fileName, e);
         }
     }
+    public Object executeJS(String script, Object... args) {
+        try {
+            return ((JavascriptExecutor) driver).executeScript(script, args);
+        } catch (Exception e) {
+            LogsManager.error("[executeJS] Failed script: " + script, e);
+            return null;
+        }
+    }
 }

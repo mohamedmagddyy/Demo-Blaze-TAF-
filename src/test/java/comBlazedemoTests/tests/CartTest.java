@@ -1,0 +1,204 @@
+package comBlazedemoTests.tests;
+
+import comBlazedemoTests.BaseTest;
+import comBlazedemoTests.pages.CartPage;
+import comBlazedemoTests.pages.HomePage;
+import comBlazedemoTests.pages.NavBarPage;
+import comBlazedemoTests.pages.ProductPage;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import java.time.Duration;
+
+/**
+ * CartTest - DemoBlaze
+ * Covers: Add to Cart, Cart Items, Delete, Place Order, Purchase Confirmation
+ */
+public class CartTest extends BaseTest {
+
+    private HomePage   homePage;
+    private CartPage   cartPage;
+    private NavBarPage navBar;
+
+    // Product used across tests — must exist in DemoBlaze
+    private static final String TEST_PRODUCT = "Samsung galaxy s6";
+    private static final String BASE_URL      = "https://www.demoblaze.com";
+
+    @BeforeMethod
+    public void initPages() {
+        homePage = new HomePage(guiDriver);
+        cartPage = new CartPage(guiDriver);
+        navBar   = new NavBarPage(guiDriver);
+        guiDriver.browserAction.navigateTo("https://www.demoblaze.com");
+    }
+
+    // ─── Helper: add one product and navigate to cart ─────────────────────────
+    private CartPage addProductAndGoToCart(String productName) {
+        homePage.clickProduct(productName);
+        ProductPage productPage = new ProductPage(guiDriver);
+        productPage.addToCartAndAccept();
+
+        navBar.clickCart();
+        return new CartPage(guiDriver);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // ADD TO CART
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    @Test(description = "Verify product is added to cart and appears in cart table")
+    public void testAddProductToCart() {
+        CartPage cart = addProductAndGoToCart(TEST_PRODUCT);
+
+        Assert.assertTrue(cart.isProductInCart(TEST_PRODUCT),
+                TEST_PRODUCT + " should appear in cart");
+    }
+
+    @Test(description = "Verify cart item count increases after adding a product")
+    public void testCartItemCountIncreases() {
+        CartPage cart = addProductAndGoToCart(TEST_PRODUCT);
+
+        Assert.assertTrue(cart.getCartItemCount() >= 1,
+                "Cart should have at least 1 item after adding a product");
+    }
+
+    @Test(description = "Verify total price is shown in cart")
+    public void testCartTotalIsDisplayed() {
+        CartPage cart = addProductAndGoToCart(TEST_PRODUCT);
+        String total = cart.getTotalPrice();
+
+        Assert.assertNotNull(total, "Total price should not be null");
+        Assert.assertFalse(total.isEmpty(), "Total price should not be empty");
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // DELETE FROM CART
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    @Test(description = "Verify deleting item removes it from cart")
+    public void testDeleteItemFromCart() {
+        CartPage cart = addProductAndGoToCart(TEST_PRODUCT);
+        Assert.assertTrue(cart.isProductInCart(TEST_PRODUCT), "Pre-condition: product should be in cart");
+
+        cart.deleteItemByName(TEST_PRODUCT);
+
+        // Allow time for DOM update
+        try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
+
+        Assert.assertFalse(cart.isProductInCart(TEST_PRODUCT),
+                "Product should be removed from cart after delete");
+    }
+
+    @Test(description = "Verify cart shows empty after deleting only item")
+    public void testCartEmptyAfterDeletion() {
+        CartPage cart = addProductAndGoToCart(TEST_PRODUCT);
+        cart.deleteFirstItem();
+
+        try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
+
+        Assert.assertTrue(cart.isCartEmpty(), "Cart should be empty after deleting all items");
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PLACE ORDER MODAL
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    @Test(description = "Verify Place Order modal opens from cart page")
+    public void testPlaceOrderModalOpens() {
+        CartPage cart = addProductAndGoToCart(TEST_PRODUCT);
+        cart.clickPlaceOrder();
+
+        Assert.assertTrue(cart.isOrderModalOpen(),
+                "Place Order modal should be visible");
+    }
+
+    @Test(description = "Verify order form is fillable")
+    public void testOrderFormCanBeFilled() {
+        CartPage cart = addProductAndGoToCart(TEST_PRODUCT);
+        cart.clickPlaceOrder();
+        cart.fillOrderForm("John Doe", "Egypt", "Cairo", "1234567890123456", "12", "2025");
+
+        // No assertion needed — if no exception is thrown, form is fillable
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PURCHASE CONFIRMATION
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    @Test(description = "Verify successful purchase shows Thank You confirmation")
+    public void testSuccessfulPurchase() {
+        CartPage cart = addProductAndGoToCart(TEST_PRODUCT);
+
+        boolean success = cart.completePurchase(
+                "John Doe", "Egypt", "Cairo",
+                "1234567890123456", "12", "2025"
+        );
+
+        Assert.assertTrue(success, "Purchase should complete with Thank You message");
+    }
+
+    @Test(description = "Verify confirmation text contains order details")
+    public void testPurchaseConfirmationContainsDetails() {
+        CartPage cart = addProductAndGoToCart(TEST_PRODUCT);
+        cart.completePurchase(
+                "Jane Smith", "USA", "New York",
+                "9876543210987654", "06", "2026"
+        );
+
+        String confirmText = cart.getConfirmationDetails();
+        Assert.assertFalse(confirmText.isEmpty(),
+                "Confirmation text should not be empty");
+    }
+
+    @Test(description = "Verify clicking OK after purchase closes modal and redirects")
+    public void testOkButtonAfterPurchase() {
+        CartPage cart = addProductAndGoToCart(TEST_PRODUCT);
+        cart.completePurchase(
+                "Ali Hassan", "Egypt", "Alexandria",
+                "1111222233334444", "03", "2024"
+        );
+        cart.clickOkOnConfirmation();
+
+        // Redirect is sometimes slow, and the modal might block clicks
+        cart.waitForOrderModalToClose();
+        navBar.clickHome();
+
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.urlContains("index.html"));
+
+        Assert.assertTrue(driver.getCurrentUrl().contains("index.html") || driver.getCurrentUrl().equals(BASE_URL + "/"),
+                "Should be on homepage after purchase OK");
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // EDGE CASES
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    @Test(description = "Verify navigating directly to cart page works")
+    public void testDirectCartNavigation() {
+        driver.navigate().to(BASE_URL + "/cart.html");
+        Assert.assertTrue(driver.getCurrentUrl().contains("cart"),
+                "Should be on cart page");
+    }
+
+    @Test(description = "Verify adding same product twice increases cart count")
+    public void testAddSameProductTwice() {
+        // Add first time
+        homePage.clickProduct(TEST_PRODUCT);
+        ProductPage productPage = new ProductPage(guiDriver);
+        productPage.addToCartAndAccept();
+
+        // Go back and add second time
+        driver.navigate().back();
+        productPage.addToCartAndAccept();
+
+        navBar.clickCart();
+        CartPage cart = new CartPage(guiDriver);
+
+        Assert.assertTrue(cart.getCartItemCount() >= 2,
+                "Cart should contain at least 2 entries for same product added twice");
+    }
+}

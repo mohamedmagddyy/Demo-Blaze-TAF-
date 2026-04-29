@@ -16,38 +16,45 @@ The framework implements the **Abstract Factory Pattern** to create WebDriver in
 - **DriverManager**: Central point for driver lifecycle management
 - Supports parallel test execution (TestNG/JUnit)
 
-## Project Structure
 
 ```
 DemoBlazeTAF/
 ├── src/
 │   ├── main/
 │   │   ├── java/comBlazedemoTests/
-│   │   │   ├── drivers/
+│   │   │   ├── customlistners/      # TestNG Listeners for reporting and logs
+│   │   │   ├── drivers/              # Driver management and factories
 │   │   │   │   ├── AbstractDriver.java (Interface)
-│   │   │   │   ├── Browser.java (Enum)
+│   │   │   │   ├──## Project Structure
+ Browser.java (Enum)
 │   │   │   │   ├── ChromeDriverFactory.java
-│   │   │   │   ├── EdgeDriverFactory.java
-│   │   │   │   ├── FirefoxDriverFactory.java
 │   │   │   │   ├── DriverManager.java (ThreadLocal Management)
-│   │   │   │   ├── WebDriverFactory.java (Alternative Factory)
-│   │   │   │   └── GUIDriver.java (Wrapper)
-│   │   │   ├── utils/
-│   │   │   │   └── PropertyReader.java (Configuration)
-│   │   │   ├── pages/ (Page Object Models)
-│   │   │   ├── apis/ (API testing)
-│   │   │   └── customlistners/ (TestNG Listeners)
-│   │   └── resources/
-│   │       └── config.properties (Configuration file)
+│   │   │   │   ├── EdgeFactory.java
+│   │   │   │   ├── FireFoxFactory.java
+│   │   │   │   ├── GUIDriver.java (Driver Wrapper)
+│   │   │   │   └── WebDriverFactory.java
+│   │   │   ├── media/                # Screenshot and Video management
+│   │   │   ├── pages/                # Page Object Models (POM)
+│   │   │   ├── utils/                # Utility classes (Actions, Readers, Logs)
+│   │   │   │   ├── actions/          # Selenium actions wrappers
+│   │   │   │   ├── dataReader/       # JSON and Property readers
+│   │   │   │   └── logs/             # Custom logging managers
+│   │   │   └── validations/          # Custom Assertions and Verifications
+│   │   └── resources/              # Configuration and property files
+│   │       ├── allure.properties
+│   │       ├── config.properties
+│   │       ├── log4j2.xml
+│   │       └── ... (other property files)
 │   └── test/
 │       ├── java/comBlazedemoTests/
-│       │   ├── BaseTest.java (Base test class)
-│       │   └── tests/
-│       │       └── SampleTest.java (Example tests)
-│       └── resources/
-│           └── test-data/ (Test data files)
-├── pom.xml (Maven configuration)
-└── testng.xml (TestNG configuration)
+│       │   ├── BaseTest.java         # Base test configuration
+│       │   └── tests/                # Test suites
+├── logs/                         # Automation execution logs
+├── pom.xml                       # Maven configuration
+├── testng.xml                    # Test execution suite
+├── ARCHITECTURE.md               # Detailed architecture documentation
+├── BEST_PRACTICES.md             # Coding standards and best practices
+└── README.md                     # Project overview
 ```
 
 ## Dependencies
@@ -309,12 +316,12 @@ jobs:
 
 ## Future Enhancements
 
-- [ ] Add test listeners for reporting
-- [ ] Implement screenshot on failure
+- [x] Add test listeners for reporting
+- [x] Implement screenshot on failure
 - [ ] Add API testing support
 - [ ] Implement database utilities
 - [ ] Add performance monitoring
-- [ ] Add video recording for failures
+- [x] Add video recording for failures
 
 ## Contributing
 

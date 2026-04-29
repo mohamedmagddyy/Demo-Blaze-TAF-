@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="TestSuite" verbose="1">
+
+    <test name="FunctionalTests">
+        <classes>
+            <class name="comBlazedemoTests.tests.HomeTest"/>
+            <class name="comBlazedemoTests.tests.CartTest"/>
+            <class name="comBlazedemoTests.tests.ProductCategoryTest"/>
+            <class name="comBlazedemoTests.tests.PaginationTest"/>
+            <class name="comBlazedemoTests.tests.ProductValidationTest"/>
+        </classes>
+    </test>
+</suite>

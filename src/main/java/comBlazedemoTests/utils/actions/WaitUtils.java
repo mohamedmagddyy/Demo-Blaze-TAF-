@@ -83,4 +83,12 @@ public class WaitUtils {
         return new WebDriverWait(driver, Duration.ofSeconds(seconds))
                 .until(ExpectedConditions.elementToBeClickable(locator));
     }
+    public Alert waitForAlertToBePresent() {
+        try {
+            return wait.until(ExpectedConditions.alertIsPresent());
+        } catch (TimeoutException e) {
+            LogsManager.error("[waitForAlert] Timeout waiting for alert", e);
+            throw e;
+        }
+    }
 }
