@@ -2,6 +2,8 @@ package comBlazedemoTests.tests;
 
 import comBlazedemoTests.BaseTest;
 import comBlazedemoTests.pages.CategoryPage;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,7 +19,8 @@ public class ProductCategoryTest extends BaseTest {
         guiDriver.browserAction.navigateTo("https://www.demoblaze.com");
     }
 
-    @Test(description = "Verify Phones category filtering")
+    @Test(description = "Verify Phones category shows only phone products", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
     public void testPhonesFiltering() {
         categoryPage.selectPhones();
         List<String> products = categoryPage.getDisplayedProductNames();
@@ -31,7 +34,8 @@ public class ProductCategoryTest extends BaseTest {
         }
     }
 
-    @Test(description = "Verify Laptops category filtering")
+    @Test(description = "Verify Laptops category shows only laptop products", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
     public void testLaptopsFiltering() {
         categoryPage.selectLaptops();
         List<String> products = categoryPage.getDisplayedProductNames();
@@ -45,7 +49,8 @@ public class ProductCategoryTest extends BaseTest {
         }
     }
 
-    @Test(description = "Verify Monitors category filtering")
+    @Test(description = "Verify Monitors category shows only monitor products", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
     public void testMonitorsFiltering() {
         categoryPage.selectMonitors();
         List<String> products = categoryPage.getDisplayedProductNames();

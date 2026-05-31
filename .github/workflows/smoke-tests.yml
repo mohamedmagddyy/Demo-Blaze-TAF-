@@ -1,0 +1,64 @@
+name: Smoke Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  smoke:
+    name: "Smoke Tests (CHROME)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 and cache Maven deps
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: '**/pom.xml'
+
+      - name: Run smoke tests
+        run: |
+          mvn -B clean test \
+            -DtestNG.suite=testng-smoke.xml \
+            -DbrowserType=CHROME \
+            -Dheadless=true
+
+      - name: Generate Allure Report
+        if: always()
+        run: mvn -B allure:report
+
+      - name: Upload Allure HTML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-smoke-CHROME
+          path: target/site/allure-maven-plugin/
+
+      - name: Upload ExtentReport
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extent-report-smoke-CHROME
+          path: test-output/ExtentReport.html
+
+      - name: Upload Screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-smoke-CHROME
+          path: test-output/screenshots/
+
+      - name: Upload Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-smoke-CHROME
+          path: logs/automation.log

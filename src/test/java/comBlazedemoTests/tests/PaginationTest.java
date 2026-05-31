@@ -2,6 +2,8 @@ package comBlazedemoTests.tests;
 
 import comBlazedemoTests.BaseTest;
 import comBlazedemoTests.pages.HomePage;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -16,7 +18,8 @@ public class PaginationTest extends BaseTest {
         guiDriver.browserAction.navigateTo("https://www.demoblaze.com");
     }
 
-    @Test(description = "Verify pagination controls visibility and functionality")
+    @Test(description = "Verify pagination controls visibility and functionality", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.MINOR)
     public void testPagination() {
         // Initially, Prev should not be visible or at least not active/clickable in a way that works
         // In DemoBlaze, 'Previous' button might be hidden until we go to next page

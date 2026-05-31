@@ -1,5 +1,6 @@
 package comBlazedemoTests.drivers;
 
+import comBlazedemoTests.utils.actions.PropertyReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -48,8 +49,14 @@ public class EdgeFactory implements AbstractDriver {
         // Additional Edge-specific arguments
         options.addArguments("--disable-blink-features=AutomationControlled");
 
-        // Optional: Enable headless mode (uncomment for headless execution)
-        // options.addArguments("--headless");
+         // Read headless from System property (set by CI) or config file
+        String headless = System.getProperty("headless",
+                PropertyReader.getProperty("headless", "false"));
+        if (headless.equalsIgnoreCase("true")) {
+            options.addArguments("--headless");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--window-size=1920,1080");
+        }
 
         return options;
     }

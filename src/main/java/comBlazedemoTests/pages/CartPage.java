@@ -42,7 +42,7 @@ public class CartPage extends BasePage {
     // ─── Purchase confirmation (SweetAlert) ───────────────────────────────────
     private static final By confirmationTitle = By.cssSelector(".sweet-alert h2");
     private static final By confirmationBody  = By.cssSelector(".sweet-alert p");
-    private static final By confirmOkBtn      = By.cssSelector(".sweet-alert .confirm");
+    private static final By confirmOkBtn      = By.cssSelector(".sweet-alert button.confirm"); // more specific
 
     // ─────────────────────────────────────────────────────────────────────────
     public CartPage(GUIDriver gui) {
@@ -128,6 +128,13 @@ public class CartPage extends BasePage {
         gui.actionsHelper.type(orderMonth,   month);
         gui.actionsHelper.type(orderYear,    year);
     }
+    public void waitForConfirmationToAppear() {
+        gui.waitUtils.waitForElementToBeVisible(confirmationTitle);
+    }
+
+    public void waitForConfirmationToDisappear() {
+        gui.waitUtils.waitForElementToBeInvisible(confirmOkBtn);
+    }
 
     public void clickPurchase() {
         gui.actionsHelper.click(purchaseBtn);
@@ -138,8 +145,12 @@ public class CartPage extends BasePage {
     // =========================================================================
 
     public boolean isPurchaseSuccessful() {
-        String title = gui.waitUtils.waitForElementToBeVisible(confirmationTitle).getText();
-        return title.equalsIgnoreCase("Thank you for your purchase!");
+        try {
+            WebElement title = gui.waitUtils.waitForElementToBeVisible(confirmationTitle);
+            return title.getText().equalsIgnoreCase("Thank you for your purchase!");
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public String getConfirmationDetails() {
@@ -147,7 +158,9 @@ public class CartPage extends BasePage {
     }
 
     public void clickOkOnConfirmation() {
-        gui.actionsHelper.click(confirmOkBtn);
+        // استخدم JavaScript click عشان يتجنب أي intercepted click issues
+        WebElement okBtn = gui.waitUtils.waitForElementToBeClickable(confirmOkBtn);
+        gui.actionsHelper.executeJS("arguments[0].click();", okBtn);
     }
 
     // =========================================================================
@@ -163,6 +176,7 @@ public class CartPage extends BasePage {
         clickPlaceOrder();
         fillOrderForm(name, country, city, card, month, year);
         clickPurchase();
+        // لا تعمل أي حاجة هنا — السبب إن أي interaction ممكن يغلق الـ SweetAlert
         return isPurchaseSuccessful();
     }
 }

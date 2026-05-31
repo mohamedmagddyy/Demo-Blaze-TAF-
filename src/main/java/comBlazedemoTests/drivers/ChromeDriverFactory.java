@@ -47,9 +47,26 @@ public class ChromeDriverFactory implements AbstractDriver {
         // Stability improvements
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-first-run");
+        options.addArguments("--no-default-browser-check");
+        options.addArguments("--disable-search-engine-choice-screen");
 
-        // Optional: Enable headless mode (uncomment for headless execution)
-        // options.addArguments("--headless");
+        // Disable password manager and "Save password" prompts
+        java.util.Map<String, Object> prefs = new java.util.HashMap<>();
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        prefs.put("autofill.profile_enabled", false);
+        options.setExperimentalOption("prefs", prefs);
+        options.addArguments("--disable-save-password-bubble");
+
+         // Read headless from System property (set by CI) or config file
+        String headless = System.getProperty("headless",
+                PropertyReader.getProperty("headless", "false"));
+        if (headless.equalsIgnoreCase("true")) {
+            options.addArguments("--headless");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--window-size=1920,1080");
+        }
 
         // Set user data directory for clean profile
         // options.addArguments("user-data-dir=/tmp/chrome");

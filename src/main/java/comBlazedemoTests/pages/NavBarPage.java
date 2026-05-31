@@ -1,6 +1,7 @@
 package comBlazedemoTests.pages;
 
 import comBlazedemoTests.drivers.GUIDriver;
+import comBlazedemoTests.utils.logs.LogsManager;
 import org.openqa.selenium.By;
 
 /**
@@ -122,8 +123,15 @@ public class NavBarPage extends BasePage {
     // =========================================================================
 
     public void openLoginModal() {
+        LogsManager.step("Waiting for Sign Up modal to be invisible before clicking login");
+        gui.waitUtils.waitForElementToBeInvisible(signUpModal);
         gui.actionsHelper.click(loginLink);
         gui.waitUtils.waitForElementToBeVisible(loginModal);
+    }
+
+    public void waitForLoginButtonVisible() {
+        LogsManager.step("Waiting for Login link to be visible in navbar");
+        gui.waitUtils.waitForElementToBeVisible(loginLink);
     }
 
     public boolean isLoginModalOpen() {
@@ -148,6 +156,9 @@ public class NavBarPage extends BasePage {
         openLoginModal();
         fillLoginForm(username, password);
         submitLogin();
+        LogsManager.step("Waiting for login to complete...");
+        gui.waitUtils.waitForElementToBeVisible(usernameTag);
+        gui.waitUtils.waitForElementToBeInvisible(loginModal);
     }
 
     // ─── Post-login state ─────────────────────────────────────────────────────
@@ -158,9 +169,12 @@ public class NavBarPage extends BasePage {
      */
     public boolean isUserLoggedIn() {
         try {
+            LogsManager.step("Checking if user is logged in by waiting for username tag visibility");
+            gui.waitUtils.waitForElementToBeVisible(usernameTag);
             String display = gui.get().findElement(usernameTag).getCssValue("display");
             return !display.equalsIgnoreCase("none");
         } catch (Exception e) {
+            LogsManager.warn("isUserLoggedIn check failed: " + e.getMessage());
             return false;
         }
     }

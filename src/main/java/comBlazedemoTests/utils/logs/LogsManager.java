@@ -49,4 +49,25 @@ public class LogsManager {
     public static void step(String stepDescription) {
         logger.info("──► STEP: " + stepDescription);
     }
+
+    public static void testStart(String testName) {
+        logger.info("╔══════════════════════════════════════════╗");
+        logger.info("║  TEST START: " + testName);
+        logger.info("╚══════════════════════════════════════════╝");
+    }
+
+    public static void testEnd(String testName, String status) {
+        logger.info("╔══════════════════════════════════════════╗");
+        logger.info("║  TEST END: " + testName + " → " + status);
+        logger.info("╚══════════════════════════════════════════╝");
+        logger.info("");
+    }
+
+    public static void suiteStart() {
+        logger.info("╔══════════════════════════════════════════╗");
+        logger.info("║         NEW TEST RUN STARTED              ║");
+        logger.info("║  " + new java.util.Date()                  );
+        logger.info("╚══════════════════════════════════════════╝");
+        logger.info("");
+    }
 }

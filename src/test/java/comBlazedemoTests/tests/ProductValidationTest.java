@@ -2,6 +2,8 @@ package comBlazedemoTests.tests;
 
 import comBlazedemoTests.BaseTest;
 import comBlazedemoTests.pages.HomePage;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,7 +19,8 @@ public class ProductValidationTest extends BaseTest {
         guiDriver.browserAction.navigateTo("https://www.demoblaze.com");
     }
 
-    @Test(description = "Verify each product has title, price, and description")
+    @Test(description = "Verify each product has title, price, and description", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
     public void testProductDetailsInGrid() {
         List<String> titles = homePage.getDisplayedProductNames();
         List<String> prices = homePage.getDisplayedProductPrices();
@@ -36,7 +39,8 @@ public class ProductValidationTest extends BaseTest {
         }
     }
 
-    @Test(description = "Verify product images are visible and not broken")
+    @Test(description = "Verify product images are visible and not broken", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.TRIVIAL)
     public void testProductImages() {
         Assert.assertTrue(homePage.areAllProductImagesVisible(), "Some product images are missing or broken");
     }

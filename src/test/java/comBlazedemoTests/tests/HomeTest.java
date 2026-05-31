@@ -4,6 +4,11 @@ import comBlazedemoTests.BaseTest;
 import comBlazedemoTests.pages.HomePage;
 import comBlazedemoTests.pages.NavBarPage;
 import comBlazedemoTests.pages.ProductPage;
+import comBlazedemoTests.utils.actions.PropertyReader;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -28,12 +33,18 @@ public class HomeTest extends BaseTest {
     // NAVBAR TESTS
     // ═══════════════════════════════════════════════════════════════════════════
 
-    @Test(description = "Verify Home page title is correct")
+    @Test(description = "Verify Home page title is correct", groups = {"smoke", "regression", "functional"})
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("Verify the homepage title is 'STORE'")
+    @Story("Home Page")
     public void testHomePageTitle() {
         Assert.assertEquals(driver.getTitle(), "STORE", "Page title mismatch");
     }
 
-    @Test(description = "Verify clicking Home nav reloads homepage")
+    @Test(description = "Verify clicking Home nav reloads homepage", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that clicking the Home link in the navbar correctly redirects/reloads the homepage")
+    @Story("Home Page")
     public void testNavHomeClick() {
         navBar.clickHome();
         Assert.assertEquals(driver.getTitle(), "STORE");
@@ -43,13 +54,19 @@ public class HomeTest extends BaseTest {
     // CONTACT MODAL
     // ═══════════════════════════════════════════════════════════════════════════
 
-    @Test(description = "Verify Contact modal opens on nav click")
+    @Test(description = "Verify Contact modal opens on nav click", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that the Contact modal is displayed when clicking the Contact link")
+    @Story("Home Page")
     public void testContactModalOpens() {
         navBar.openContactModal();
         Assert.assertTrue(navBar.isContactModalOpen(), "Contact modal should be visible");
     }
 
-    @Test(description = "Verify Contact form sends message successfully")
+    @Test(description = "Verify Contact form sends message successfully", groups = {"functional"})
+    @Severity(SeverityLevel.MINOR)
+    @Description("Verify that the contact form can be filled and submitted")
+    @Story("Home Page")
     public void testContactFormSubmission() {
         navBar.openContactModal();
         navBar.fillAndSubmitContactForm("test@mail.com", "John Doe", "Hello, this is a test message");
@@ -61,7 +78,10 @@ public class HomeTest extends BaseTest {
     // ABOUT US MODAL
     // ═══════════════════════════════════════════════════════════════════════════
 
-    @Test(description = "Verify About Us modal opens on nav click")
+    @Test(description = "Verify About Us modal opens on nav click", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that the About Us modal with video is displayed")
+    @Story("Home Page")
     public void testAboutUsModalOpens() {
         navBar.openAboutUsModal();
         Assert.assertTrue(navBar.isAboutUsModalOpen(), "About Us modal should be visible");
@@ -71,20 +91,23 @@ public class HomeTest extends BaseTest {
     // LOGIN MODAL
     // ═══════════════════════════════════════════════════════════════════════════
 
-    @Test(description = "Verify Login modal opens on nav click")
+    @Test(description = "Verify Login modal opens on nav click", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that the Login modal is displayed")
+    @Story("Home Page")
     public void testLoginModalOpens() {
         navBar.openLoginModal();
         Assert.assertTrue(navBar.isLoginModalOpen(), "Login modal should be visible");
     }
 
-    @Test(description = "Verify valid login shows logged-in username in navbar")
+    @Test(description = "Verify valid login shows logged-in username in navbar", groups = {"smoke", "regression", "functional"})
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("Verify that a valid login displays the username in the navbar")
+    @Story("Home Page")
     public void testValidLogin() {
-        String username = "user_" + System.currentTimeMillis();
-        String password = "password123";
+        String username = PropertyReader.getProperty("login.username");
+        String password = PropertyReader.getProperty("login.password");
 
-        navBar.signUpAs(username, password);
-        try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
-        
         navBar.loginAs(username, password);
 
         // Wait for navbar to update
@@ -92,13 +115,14 @@ public class HomeTest extends BaseTest {
         Assert.assertTrue(loggedIn, "User should be logged in after valid credentials");
     }
 
-    @Test(description = "Verify logged-in username appears in navbar after login")
+    @Test(description = "Verify logged-in username appears in navbar after login", groups = {"functional"})
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that the correct username is displayed in the navbar after login")
+    @Story("Home Page")
     public void testLoggedInUsernameDisplayed() {
-        String username = "user_" + (System.currentTimeMillis() + 100);
-        String password = "password123";
+        String username = PropertyReader.getProperty("login.username");
+        String password = PropertyReader.getProperty("login.password");
 
-        navBar.signUpAs(username, password);
-        try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
         navBar.loginAs(username, password);
         String displayedName = navBar.getLoggedInUsername();
 
@@ -106,13 +130,14 @@ public class HomeTest extends BaseTest {
                 "Navbar should display logged-in username, but got: " + displayedName);
     }
 
-    @Test(description = "Verify logout resets navbar to login/signup state")
+    @Test(description = "Verify logout resets navbar to login/signup state", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that logging out removes the username and restores Login link")
+    @Story("Home Page")
     public void testLogout() {
-        String username = "user_" + (System.currentTimeMillis() + 200);
-        String password = "password123";
+        String username = PropertyReader.getProperty("login.username");
+        String password = PropertyReader.getProperty("login.password");
 
-        navBar.signUpAs(username, password);
-        try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
         navBar.loginAs(username, password);
         Assert.assertTrue(navBar.isUserLoggedIn(), "Should be logged in first");
 
@@ -124,7 +149,10 @@ public class HomeTest extends BaseTest {
     // SIGN UP MODAL
     // ═══════════════════════════════════════════════════════════════════════════
 
-    @Test(description = "Verify Sign Up modal opens on nav click")
+    @Test(description = "Verify Sign Up modal opens on nav click", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that the Sign Up modal is displayed")
+    @Story("Home Page")
     public void testSignUpModalOpens() {
         navBar.openSignUpModal();
         Assert.assertTrue(navBar.isSignUpModalOpen(), "Sign Up modal should be visible");
@@ -134,21 +162,30 @@ public class HomeTest extends BaseTest {
     // CATEGORIES
     // ═══════════════════════════════════════════════════════════════════════════
 
-    @Test(description = "Verify filtering by Phones category shows products")
+    @Test(description = "Verify filtering by Phones category shows products", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that the Phones category filter displays products")
+    @Story("Home Page")
     public void testFilterByPhones() {
         homePage.clickPhonesCategory();
         Assert.assertTrue(homePage.getProductCount() > 0,
                 "Phones category should show at least 1 product");
     }
 
-    @Test(description = "Verify filtering by Laptops category shows products")
+    @Test(description = "Verify filtering by Laptops category shows products", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that the Laptops category filter displays products")
+    @Story("Home Page")
     public void testFilterByLaptops() {
         homePage.clickLaptopsCategory();
         Assert.assertTrue(homePage.getProductCount() > 0,
                 "Laptops category should show at least 1 product");
     }
 
-    @Test(description = "Verify filtering by Monitors category shows products")
+    @Test(description = "Verify filtering by Monitors category shows products", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that the Monitors category filter displays products")
+    @Story("Home Page")
     public void testFilterByMonitors() {
         homePage.clickMonitorsCategory();
         Assert.assertTrue(homePage.getProductCount() > 0,
@@ -159,13 +196,19 @@ public class HomeTest extends BaseTest {
     // PRODUCTS
     // ═══════════════════════════════════════════════════════════════════════════
 
-    @Test(description = "Verify homepage loads products on initial load")
+    @Test(description = "Verify homepage loads products on initial load", groups = {"smoke", "regression", "functional"})
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("Verify that products are loaded when the homepage is opened")
+    @Story("Home Page")
     public void testProductsLoadOnHomepage() {
         Assert.assertTrue(homePage.getProductCount() > 0,
                 "Homepage should display products");
     }
 
-    @Test(description = "Verify clicking a product navigates to product detail page")
+    @Test(description = "Verify clicking a product navigates to product detail page", groups = {"smoke", "regression", "functional"})
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that clicking a product redirects to the correct product detail page")
+    @Story("Home Page")
     public void testClickProductNavigatesToDetailPage() {
         homePage.clickFirstProduct();
         ProductPage productPage = new ProductPage(guiDriver);
@@ -175,7 +218,10 @@ public class HomeTest extends BaseTest {
         Assert.assertFalse(productName.isEmpty(), "Product name should not be empty");
     }
 
-    @Test(description = "Verify product detail page shows price")
+    @Test(description = "Verify product detail page shows price", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that the price is correctly displayed on the product detail page")
+    @Story("Home Page")
     public void testProductDetailShowsPrice() {
         homePage.clickFirstProduct();
         ProductPage productPage = new ProductPage(guiDriver);
@@ -185,7 +231,10 @@ public class HomeTest extends BaseTest {
         Assert.assertTrue(price.contains("$"), "Price should contain $ symbol");
     }
 
-    @Test(description = "Verify clicking Next page loads more products")
+    @Test(description = "Verify clicking Next page loads more products", groups = {"regression", "functional"})
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that pagination works correctly by clicking the Next button")
+    @Story("Home Page")
     public void testNextPageNavigation() {
         int firstPageCount = homePage.getProductCount();
         homePage.clickNextPage();
@@ -194,7 +243,10 @@ public class HomeTest extends BaseTest {
         Assert.assertTrue(secondPageCount > 0, "Next page should have products");
     }
 
-    @Test(description = "Verify cart nav redirects to cart page")
+    @Test(description = "Verify cart nav redirects to cart page", groups = {"smoke", "regression", "functional"})
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that clicking the Cart link in the navbar redirects to the cart page")
+    @Story("Home Page")
     public void testNavCartRedirectsToCartPage() {
         navBar.clickCart();
         Assert.assertTrue(driver.getCurrentUrl().contains("cart"),

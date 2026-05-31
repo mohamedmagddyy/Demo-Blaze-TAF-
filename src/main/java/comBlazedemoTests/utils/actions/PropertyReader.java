@@ -56,6 +56,11 @@ public class PropertyReader {
      * @return Property value or throws exception if not found
      */
     public static String getProperty(String key) {
+        // CI passes browser/headless as System properties — check first
+        String sysProp = System.getProperty(key);
+        if (sysProp != null && !sysProp.isEmpty()) {
+            return sysProp;
+        }
         String value = properties.getProperty(key);
         if (value == null) {
             throw new IllegalArgumentException("Property '" + key + "' not found in configuration.");
@@ -70,6 +75,11 @@ public class PropertyReader {
      * @return Property value or default value
      */
     public static String getProperty(String key, String defaultValue) {
+        // CI passes browser/headless as System properties — check first
+        String sysProp = System.getProperty(key);
+        if (sysProp != null && !sysProp.isEmpty()) {
+            return sysProp;
+        }
         return properties.getProperty(key, defaultValue);
     }
 

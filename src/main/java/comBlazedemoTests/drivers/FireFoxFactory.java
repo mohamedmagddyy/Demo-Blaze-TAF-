@@ -1,5 +1,6 @@
 package comBlazedemoTests.drivers;
 
+import comBlazedemoTests.utils.actions.PropertyReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -53,8 +54,13 @@ public class FireFoxFactory implements AbstractDriver {
         // Additional Firefox arguments
         options.addArguments("--start-maximized");
 
-        // Optional: Enable headless mode (uncomment for headless execution)
-        // options.addArguments("--headless");
+         // Read headless from System property (set by CI) or config file
+        String headless = System.getProperty("headless",
+                PropertyReader.getProperty("headless", "false"));
+        if (headless.equalsIgnoreCase("true")) {
+            options.addArguments("--headless");
+            options.addArguments("--window-size=1920,1080");
+        }
 
         // Set binary path (if using non-standard installation)
         // options.setBinary("/path/to/firefox");
