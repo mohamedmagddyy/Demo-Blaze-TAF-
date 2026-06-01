@@ -17,6 +17,7 @@
         <webdrivermanager.version>5.6.3</webdrivermanager.version>
         <aspectj.version>1.9.22</aspectj.version>
         <lombok.version>1.18.32</lombok.version>
+        <testng.suite>testng-smoke.xml</testng.suite>
     </properties>
 
     <dependencies>
