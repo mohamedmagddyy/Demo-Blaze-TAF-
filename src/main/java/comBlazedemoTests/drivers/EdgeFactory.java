@@ -1,7 +1,6 @@
 package comBlazedemoTests.drivers;
 
 import comBlazedemoTests.utils.actions.PropertyReader;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -18,7 +17,6 @@ public class EdgeFactory implements AbstractDriver {
 
     @Override
     public WebDriver createDriver() {
-        WebDriverManager.edgedriver().setup();
         WebDriver driver = new EdgeDriver(getEdgeOptions());
         configureWaits(driver);
         return driver;
@@ -53,8 +51,7 @@ public class EdgeFactory implements AbstractDriver {
         String headless = System.getProperty("headless",
                 PropertyReader.getProperty("headless", "false"));
         if (headless.equalsIgnoreCase("true")) {
-            options.addArguments("--headless");
-            options.addArguments("--disable-gpu");
+            options.addArguments("--headless=new");            options.addArguments("--disable-gpu");
             options.addArguments("--window-size=1920,1080");
         }
 

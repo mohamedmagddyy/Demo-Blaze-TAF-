@@ -1,0 +1,118 @@
+name: E2E Test Execution
+
+on:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'Select Test Suite'
+        required: true
+        type: choice
+        options:
+          - smoke
+          - functional
+          - regression
+
+jobs:
+  tests:
+    name: "${{ github.event.inputs.suite }} Tests (${{ matrix.browser }})"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [CHROME, FIREFOX]
+
+    steps:
+      # =========================
+      # Checkout Code
+      # =========================
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # =========================
+      # Java Setup
+      # =========================
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      # =========================
+      # Debug Info
+      # =========================
+      - name: Print Execution Info
+        run: |
+          echo "=================================="
+          echo "Suite: ${{ github.event.inputs.suite }}"
+          echo "Browser: ${{ matrix.browser }}"
+          echo "=================================="
+
+      # =========================
+      # Run Tests
+      # =========================
+      - name: Run Tests
+        run: |
+          mvn -B clean test \
+            -DsuiteXmlFile=testng-${{ github.event.inputs.suite }}.xml \
+            -DbrowserType=${{ matrix.browser }} \
+            -Dheadless=true
+
+      # =========================
+      # Generate Allure Results (IMPORTANT FIX)
+      # =========================
+      - name: Generate Allure Report
+        if: always()
+        run: mvn -B allure:report
+
+      # =========================
+      # Upload Allure HTML Report
+      # =========================
+      - name: Upload Allure Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-${{ github.event.inputs.suite }}-${{ matrix.browser }}
+          path: target/site/allure-maven-plugin/
+
+      # =========================
+      # Upload Allure RAW RESULTS (FIXED PATH)
+      # =========================
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-${{ github.event.inputs.suite }}-${{ matrix.browser }}
+          path: target/allure-results/
+
+      # =========================
+      # Upload Extent Report
+      # =========================
+      - name: Upload Extent Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extent-report-${{ github.event.inputs.suite }}-${{ matrix.browser }}
+          path: test-output/ExtentReport.html
+
+      # =========================
+      # Upload Screenshots (safe path)
+      # =========================
+      - name: Upload Screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ github.event.inputs.suite }}-${{ matrix.browser }}
+          path: test-output/screenshots/
+
+      # =========================
+      # Upload Logs
+      # =========================
+      - name: Upload Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ github.event.inputs.suite }}-${{ matrix.browser }}
+          path: logs/
