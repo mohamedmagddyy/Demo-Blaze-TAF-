@@ -66,7 +66,7 @@ public class BaseTest {
      * Setup method - Runs before each test
      * Initializes the WebDriver
      */
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setUp() {
         guiDriver = new GUIDriver();
         driver = guiDriver.get();
@@ -76,7 +76,7 @@ public class BaseTest {
      * Teardown method - Runs after each test
      * Quits the WebDriver and cleans up resources
      */
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         if (guiDriver != null && guiDriver.isDriverInitialized()) {
             guiDriver.quitDriver();

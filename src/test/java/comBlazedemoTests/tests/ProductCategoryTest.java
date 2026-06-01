@@ -13,7 +13,7 @@ public class ProductCategoryTest extends BaseTest {
 
     private CategoryPage categoryPage;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void initPage() {
         categoryPage = new CategoryPage(guiDriver);
         guiDriver.browserAction.navigateTo("https://www.demoblaze.com");

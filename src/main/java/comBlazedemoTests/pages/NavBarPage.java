@@ -185,8 +185,16 @@ public class NavBarPage extends BasePage {
 
     public void clickLogout() {
         gui.actionsHelper.click(logoutLink);
-        // Wait until login button is visible again (JS restores it after logout)
-        gui.waitUtils.waitForElementToBeVisible(loginLink);
+
+        // استنى بـ JS إن الـ nameofuser يبقى display:none
+        gui.waitUtils.fluentWait(d -> {
+            String display = (String) ((org.openqa.selenium.JavascriptExecutor) d)
+                    .executeScript(
+                            "var el = document.getElementById('nameofuser');" +
+                                    "return el ? el.style.display : 'none';"
+                    );
+            return "none".equals(display) || "".equals(display) ? true : null;
+        }, 15);
     }
 
     // =========================================================================

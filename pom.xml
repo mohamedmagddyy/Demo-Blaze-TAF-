@@ -16,6 +16,7 @@
         <selenium.version>4.15.0</selenium.version>
         <webdrivermanager.version>5.6.3</webdrivermanager.version>
         <aspectj.version>1.9.22</aspectj.version>
+        <lombok.version>1.18.32</lombok.version>
     </properties>
 
     <dependencies>
@@ -94,6 +95,14 @@
             <version>5.0.9</version>
         </dependency>
 
+        <!-- Lombok - required by ExtentReports, 1.18.32+ for Java 21 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Allure TestNG -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
@@ -124,6 +133,13 @@
                 <version>3.11.0</version>
                 <configuration>
                     <release>21</release>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
@@ -137,7 +153,7 @@
                     <argLine>
                         --add-opens java.base/java.lang=ALL-UNNAMED
                         --add-opens java.base/java.util=ALL-UNNAMED
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.22/aspectjweaver-1.9.22.jar"
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
                 </configuration>
             </plugin>

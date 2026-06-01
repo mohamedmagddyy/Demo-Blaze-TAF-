@@ -12,7 +12,7 @@ public class PaginationTest extends BaseTest {
 
     private HomePage homePage;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void initPage() {
         homePage = new HomePage(guiDriver);
         guiDriver.browserAction.navigateTo("https://www.demoblaze.com");

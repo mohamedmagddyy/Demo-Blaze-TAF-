@@ -22,7 +22,7 @@ public class HomeTest extends BaseTest {
     private HomePage   homePage;
     private NavBarPage navBar;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void initPage() {
         homePage = new HomePage(guiDriver);
         navBar   = new NavBarPage(guiDriver);
@@ -142,6 +142,8 @@ public class HomeTest extends BaseTest {
         Assert.assertTrue(navBar.isUserLoggedIn(), "Should be logged in first");
 
         navBar.clickLogout();
+
+        // تحقق إن الـ username اختفى من الـ navbar
         Assert.assertFalse(navBar.isUserLoggedIn(), "User should be logged out");
     }
 

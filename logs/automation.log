@@ -1,9 +1,137 @@
-[2026-05-31 15:07:07] [INFO ] [main] Allure results cleared for new run
-[2026-05-31 15:07:07] [INFO ] [main] ================================================
-[2026-05-31 15:07:07] [INFO ] [main]    RUN STARTED: 2026-05-31T15:07:07.320284600
-[2026-05-31 15:07:07] [INFO ] [main]    BROWSER: CHROME
-[2026-05-31 15:07:07] [INFO ] [main]    BASE URL: https://www.demoblaze.com
-[2026-05-31 15:07:07] [INFO ] [main] ================================================
-[2026-05-31 15:07:10] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
-[2026-05-31 15:07:11] [INFO ] [main] ──► STEP: Clicking: By.id: next2
-[2026-05-31 15:07:13] [INFO ] [main] ──► STEP: Clicking: By.id: prev2
+[2026-06-01 14:42:40] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:42:41] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: a[data-target='#videoModal']
+[2026-06-01 14:42:43] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:42:47] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:42:48] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: a[data-target='#exampleModal']
+[2026-06-01 14:42:50] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:42:51] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[@id='itemc' and @onclick="byCat('notebook')"]
+[2026-06-01 14:42:53] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:42:54] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[@id='itemc' and @onclick="byCat('monitor')"]
+[2026-06-01 14:42:56] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:42:57] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[@id='itemc' and @onclick="byCat('phone')"]
+[2026-06-01 14:43:04] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:06] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:08] [INFO ] [main] ──► STEP: Waiting for Sign Up modal to be invisible before clicking login
+[2026-06-01 14:43:08] [INFO ] [main] ──► STEP: Clicking: By.id: login2
+[2026-06-01 14:43:09] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:10] [INFO ] [main] ──► STEP: Waiting for Sign Up modal to be invisible before clicking login
+[2026-06-01 14:43:10] [INFO ] [main] ──► STEP: Clicking: By.id: login2
+[2026-06-01 14:43:11] [INFO ] [main] ──► STEP: Typing in: By.id: loginusername
+[2026-06-01 14:43:11] [INFO ] [main] ──► STEP: Typing in: By.id: loginpassword
+[2026-06-01 14:43:11] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: #logInModal .btn-primary
+[2026-06-01 14:43:11] [INFO ] [main] ──► STEP: Waiting for login to complete...
+[2026-06-01 14:43:13] [INFO ] [main] ──► STEP: Checking if user is logged in by waiting for username tag visibility
+[2026-06-01 14:43:13] [INFO ] [main] ──► STEP: Clicking: By.id: logout2
+[2026-06-01 14:43:14] [INFO ] [main] ──► STEP: Checking if user is logged in by waiting for username tag visibility
+[2026-06-01 14:43:24] [ERROR] [main] [waitForVisible] Timeout: By.id: nameofuser
+org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.id: nameofuser (tried for 10 second(s) with 500 milliseconds interval)
+Build info: version: '4.15.0', revision: '1d14b5521b'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.10'
+Driver info: jdk.proxy2.$Proxy13
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84) ~[selenium-support-4.15.0.jar:?]
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:229) ~[selenium-support-4.15.0.jar:?]
+	at comBlazedemoTests.utils.actions.WaitUtils.waitForElementToBeVisible(WaitUtils.java:26) ~[classes/:?]
+	at comBlazedemoTests.pages.NavBarPage.isUserLoggedIn(NavBarPage.java:173) ~[classes/:?]
+	at comBlazedemoTests.tests.HomeTest.testLogout(HomeTest.java:147) ~[test-classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141) ~[testng-7.10.2.jar:7.10.2]
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:686) ~[testng-7.10.2.jar:7.10.2]
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230) ~[testng-7.10.2.jar:7.10.2]
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63) ~[testng-7.10.2.jar:7.10.2]
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:992) ~[testng-7.10.2.jar:7.10.2]
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203) ~[testng-7.10.2.jar:7.10.2]
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154) ~[testng-7.10.2.jar:7.10.2]
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134) ~[testng-7.10.2.jar:7.10.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) [?:?]
+	at org.testng.TestRunner.privateRun(TestRunner.java:739) [testng-7.10.2.jar:7.10.2]
+	at org.testng.TestRunner.run(TestRunner.java:614) [testng-7.10.2.jar:7.10.2]
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421) [testng-7.10.2.jar:7.10.2]
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413) [testng-7.10.2.jar:7.10.2]
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373) [testng-7.10.2.jar:7.10.2]
+	at org.testng.SuiteRunner.run(SuiteRunner.java:312) [testng-7.10.2.jar:7.10.2]
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52) [testng-7.10.2.jar:7.10.2]
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95) [testng-7.10.2.jar:7.10.2]
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274) [testng-7.10.2.jar:7.10.2]
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208) [testng-7.10.2.jar:7.10.2]
+	at org.testng.TestNG.runSuites(TestNG.java:1112) [testng-7.10.2.jar:7.10.2]
+	at org.testng.TestNG.run(TestNG.java:1079) [testng-7.10.2.jar:7.10.2]
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65) [testng-rt.jar:?]
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:109) [testng-rt.jar:?]
+[2026-06-01 14:43:24] [WARN ] [main] isUserLoggedIn check failed: Expected condition failed: waiting for visibility of element located by By.id: nameofuser (tried for 10 second(s) with 500 milliseconds interval)
+Build info: version: '4.15.0', revision: '1d14b5521b'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.10'
+Driver info: jdk.proxy2.$Proxy13
+[2026-06-01 14:43:26] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:27] [INFO ] [main] ──► STEP: Clicking: By.id: cartur
+[2026-06-01 14:43:28] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:29] [INFO ] [main] ──► STEP: Clicking: By.id: nava
+[2026-06-01 14:43:30] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:32] [INFO ] [main] ──► STEP: Clicking: By.id: next2
+[2026-06-01 14:43:34] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:39] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:41] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:42] [INFO ] [main] ──► STEP: Clicking: By.id: signin2
+[2026-06-01 14:43:44] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:45] [INFO ] [main] ──► STEP: Waiting for Sign Up modal to be invisible before clicking login
+[2026-06-01 14:43:45] [INFO ] [main] ──► STEP: Clicking: By.id: login2
+[2026-06-01 14:43:46] [INFO ] [main] ──► STEP: Typing in: By.id: loginusername
+[2026-06-01 14:43:46] [INFO ] [main] ──► STEP: Typing in: By.id: loginpassword
+[2026-06-01 14:43:46] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: #logInModal .btn-primary
+[2026-06-01 14:43:46] [INFO ] [main] ──► STEP: Waiting for login to complete...
+[2026-06-01 14:43:48] [INFO ] [main] ──► STEP: Checking if user is logged in by waiting for username tag visibility
+[2026-06-01 14:43:49] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:51] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[contains(@class,'hrefch') and normalize-space(text())='Samsung galaxy s6']
+[2026-06-01 14:43:52] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: .btn-success
+[2026-06-01 14:43:53] [INFO ] [main] [PASS] Alert accepted after waiting
+[2026-06-01 14:43:53] [INFO ] [main] ──► STEP: Clicking: By.id: cartur
+[2026-06-01 14:43:56] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:43:57] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[contains(@class,'hrefch') and normalize-space(text())='Samsung galaxy s6']
+[2026-06-01 14:43:58] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: .btn-success
+[2026-06-01 14:43:59] [INFO ] [main] [PASS] Alert accepted after waiting
+[2026-06-01 14:43:59] [INFO ] [main] ──► STEP: Clicking: By.id: cartur
+[2026-06-01 14:44:09] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:44:11] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[contains(@class,'hrefch') and normalize-space(text())='Samsung galaxy s6']
+[2026-06-01 14:44:12] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: .btn-success
+[2026-06-01 14:44:13] [INFO ] [main] [PASS] Alert accepted after waiting
+[2026-06-01 14:44:13] [INFO ] [main] ──► STEP: Clicking: By.id: cartur
+[2026-06-01 14:44:16] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:44:17] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[contains(@class,'hrefch') and normalize-space(text())='Samsung galaxy s6']
+[2026-06-01 14:44:19] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: .btn-success
+[2026-06-01 14:44:20] [INFO ] [main] [PASS] Alert accepted after waiting
+[2026-06-01 14:44:20] [INFO ] [main] ──► STEP: Clicking: By.id: cartur
+[2026-06-01 14:44:22] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:44:24] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[contains(@class,'hrefch') and normalize-space(text())='Samsung galaxy s6']
+[2026-06-01 14:44:25] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: .btn-success
+[2026-06-01 14:44:27] [INFO ] [main] [PASS] Alert accepted after waiting
+[2026-06-01 14:44:27] [INFO ] [main] ──► STEP: Clicking: By.id: cartur
+[2026-06-01 14:44:36] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:44:38] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:44:39] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[contains(@class,'hrefch') and normalize-space(text())='Samsung galaxy s6']
+[2026-06-01 14:44:41] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: .btn-success
+[2026-06-01 14:44:42] [INFO ] [main] [PASS] Alert accepted after waiting
+[2026-06-01 14:44:42] [INFO ] [main] ──► STEP: Clicking: By.id: cartur
+[2026-06-01 14:44:42] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: button[data-target='#orderModal']
+[2026-06-01 14:44:43] [INFO ] [main] ──► STEP: Typing in: By.id: name
+[2026-06-01 14:44:43] [INFO ] [main] ──► STEP: Typing in: By.id: country
+[2026-06-01 14:44:43] [INFO ] [main] ──► STEP: Typing in: By.id: city
+[2026-06-01 14:44:43] [INFO ] [main] ──► STEP: Typing in: By.id: card
+[2026-06-01 14:44:43] [INFO ] [main] ──► STEP: Typing in: By.id: month
+[2026-06-01 14:44:43] [INFO ] [main] ──► STEP: Typing in: By.id: year
+[2026-06-01 14:44:45] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:44:46] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[contains(@class,'hrefch') and normalize-space(text())='Samsung galaxy s6']
+[2026-06-01 14:44:47] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: .btn-success
+[2026-06-01 14:44:48] [INFO ] [main] [PASS] Alert accepted after waiting
+[2026-06-01 14:44:48] [INFO ] [main] ──► STEP: Clicking: By.id: cartur
+[2026-06-01 14:44:49] [INFO ] [main] ──► STEP: Clicking: By.cssSelector: button[data-target='#orderModal']
+[2026-06-01 14:44:50] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:44:53] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:44:57] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:44:59] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[@id='itemc' and @onclick="byCat('notebook')"]
+[2026-06-01 14:45:01] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:45:04] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[@id='itemc' and @onclick="byCat('monitor')"]
+[2026-06-01 14:45:06] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:45:08] [INFO ] [main] ──► STEP: Clicking: By.xpath: //a[@id='itemc' and @onclick="byCat('phone')"]
+[2026-06-01 14:45:11] [INFO ] [main] ──► STEP: Navigating to: https://www.demoblaze.com
+[2026-06-01 14:45:14] [INFO ] [main] ──► STEP: Clicking: By.id: next2
+[2026-06-01 14:45:15] [INFO ] [main] ──► STEP: Clicking: By.id: prev2
